@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sister! 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .step {
+            display: none;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .step.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .step-button {
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef, #ff9a9e);
+            border: none;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-button:active {
+            transform: translateY(-2px);
+        }
+
+        .step-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .step-button:hover::before {
+            left: 100%;
+        }
+
+        .message {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .message h2 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .message p {
+            color: #555;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff6b9d;
+            font-size: 2rem;
+            animation: floatUp 6s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(0deg);
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-10vh) rotate(360deg);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            top: -10px;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .cake {
+            font-size: 5rem;
+            animation: spin 3s ease-in-out infinite;
+            margin: 2rem 0;
+        }
+
+        @keyframes spin {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(10deg);
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d, #ffd93d);
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        .final-message {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .sparkle {
+            display: inline-block;
+            animation: sparkle 1.5s infinite;
+        }
+
+        @keyframes sparkle {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+        }
+
+        .decorative-frame {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 2rem auto;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow:
+                0 0 30px rgba(255, 215, 0, 0.4),
+                inset 0 0 20px rgba(255, 255, 255, 0.2);
+            animation: frameGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes frameGlow {
+
+            0%,
+            100% {
+                box-shadow:
+                    0 0 30px rgba(255, 215, 0, 0.4),
+                    inset 0 0 20px rgba(255, 255, 255, 0.2);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 50px rgba(255, 215, 0, 0.8),
+                    inset 0 0 30px rgba(255, 255, 255, 0.4);
+            }
+        }
+
+        .frame-corner {
+            position: absolute;
+            font-size: 2rem;
+            z-index: 3;
+            animation: bounce 2s infinite;
+        }
+
+        .top-left {
+            top: -10px;
+            left: -10px;
+        }
+
+        .top-right {
+            top: -10px;
+            right: -10px;
+        }
+
+        .bottom-left {
+            bottom: -10px;
+            left: -10px;
+        }
+
+        .bottom-right {
+            bottom: -10px;
+            right: -10px;
+        }
+
+        .frame-border-top,
+        .frame-border-bottom {
+            position: absolute;
+            height: 6px;
+            left: 30px;
+            right: 30px;
+            background: linear-gradient(90deg, #ff6b9d, #ffd93d, #6bcf7f, #ff6b9d);
+            background-size: 200% 100%;
+            animation: borderFlow 3s linear infinite;
+        }
+
+        .frame-border-left,
+        .frame-border-right {
+            position: absolute;
+            width: 6px;
+            top: 30px;
+            bottom: 30px;
+            background: linear-gradient(180deg, #ff6b9d, #ffd93d, #6bcf7f, #ff6b9d);
+            background-size: 100% 200%;
+            animation: borderFlow 3s linear infinite;
+        }
+
+        .frame-border-top {
+            top: 6px;
+        }
+
+        .frame-border-bottom {
+            bottom: 6px;
+        }
+
+        .frame-border-left {
+            left: 6px;
+        }
+
+        .frame-border-right {
+            right: 6px;
+        }
+
+        @keyframes borderFlow {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 200% 200%;
+            }
+        }
+
+        .photo-placeholder {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            filter: brightness(1.1) contrast(1.1);
+        }
+
+        .photo-placeholder:hover img {
+            transform: scale(1.05);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-placeholder:hover .photo-overlay {
+            transform: translateY(0);
+        }
+
+        .photo-text {
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .float-element {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: floatAround 4s ease-in-out infinite;
+            opacity: 0.8;
+        }
+
+        .float-element:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .float-element:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .float-element:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .float-element:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+
+        .float-element:nth-child(5) {
+            animation-delay: 2s;
+        }
+
+        .float-element:nth-child(6) {
+            animation-delay: 2.5s;
+        }
+
+        @keyframes floatAround {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.8;
+            }
+
+            25% {
+                transform: translateY(-10px) rotate(90deg);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-5px) rotate(180deg);
+                opacity: 0.6;
+            }
+
+            75% {
+                transform: translateY(-15px) rotate(270deg);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floating-hearts"></div>
+
+    <div class="container">
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+
+        <!-- Step 1: Welcome -->
+        <div class="step active" id="step1">
+            <h1>🎈 Something Special Awaits! 🎈</h1>
+            <div class="message">
+                <h2>Ready for a Surprise?</h2>
+                <p>Your loving sibling has prepared something wonderful for you today! Click the button below to begin
+                    this magical journey.</p>
+            </div>
+            <button class="step-button" onclick="nextStep(2)">Let's Begin! ✨</button>
+        </div>
+
+        <!-- Step 2: Hint -->
+        <div class="step" id="step2">
+            <h1>🌟 Can You Guess? 🌟</h1>
+            <div class="message">
+                <h2>Here's a Little Hint...</h2>
+                <p>Dearest sister, a special moment approaches with gentle grace, bringing warmth and joy to our hearts.
+                    Like stars in the night, candles shall glow, carrying our fondest wishes to the heavens above. Can
+                    you guess what wonderful celebration awaits you, my beloved sister?</p>
+            </div>
+            <button class="step-button" onclick="nextStep(3)">I Think I Know! 🤔</button>
+        </div>
+
+        <!-- Step 3: Countdown -->
+        <div class="step" id="step3">
+            <h1>🎭 Almost There! 🎭</h1>
+            <div class="message">
+                <h2>Get Ready...</h2>
+                <p>In just a moment, we'll reveal why today is so incredibly special for the most amazing sister in the
+                    world!</p>
+            </div>
+            <button class="step-button" onclick="startCountdown()">Start the Magic! 🎪</button>
+        </div>
+
+        <!-- Step 4: Countdown Display -->
+        <div class="step" id="step4">
+            <h1 id="countdown">3</h1>
+            <div class="message">
+                <p>Get ready for the big reveal!</p>
+            </div>
+        </div>
+
+        <!-- Step 5: Big Reveal -->
+        <div class="step" id="step5">
+            <div class="cake">🎂</div>
+            <h1>🎉 HAPPY BIRTHDAY! 🎉</h1>
+            <div class="final-message">
+                <!-- Decorative Photo Frame -->
+                <div class="decorative-frame">
+                    <div class="frame-corner top-left">🌸</div>
+                    <div class="frame-corner top-right">🌺</div>
+                    <div class="frame-corner bottom-left">🌻</div>
+                    <div class="frame-corner bottom-right">🌷</div>
+                    <div class="frame-border-top"></div>
+                    <div class="frame-border-bottom"></div>
+                    <div class="frame-border-left"></div>
+                    <div class="frame-border-right"></div>
+                    <div class="photo-placeholder">
+                        <img src="https://i.ibb.co/zWJ5zXrt/swetha.jpg" alt="Beautiful Sister" id="sisterPhoto" />
+                        <div class="photo-overlay">
+                            <span class="photo-text">My Amazing Sister! 💕</span>
+                        </div>
+                    </div>
+                    <div class="floating-elements">
+                        <span class="float-element" style="top: 10%; left: 5%;">✨</span>
+                        <span class="float-element" style="top: 20%; right: 10%;">💫</span>
+                        <span class="float-element" style="bottom: 15%; left: 8%;">⭐</span>
+                        <span class="float-element" style="bottom: 25%; right: 5%;">🌟</span>
+                        <span class="float-element" style="top: 50%; left: 2%;">💖</span>
+                        <span class="float-element" style="top: 60%; right: 3%;">💝</span>
+                    </div>
+                </div>
+
+                <h2>To My <span class="sparkle">✨</span> Wonderful Sister <span class="sparkle">✨</span></h2>
+                <p>Today is YOUR special day! You bring so much joy, laughter, and love into this world. I'm so grateful
+                    to have you as my sister. May this new year of your life be filled with endless happiness, amazing
+                    adventures, and all your dreams coming true!</p>
+                <br>
+                <p><strong>Wishing you the happiest of birthdays! 🎈🎁💕</strong></p>
+            </div>
+            <button class="step-button" onclick="createConfetti()">Celebrate! 🎊</button>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        function updateProgressBar() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function nextStep(step) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep = step;
+
+            setTimeout(() => {
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                updateProgressBar();
+            }, 300);
+        }
+
+        function startCountdown() {
+            nextStep(4);
+            let count = 3;
+            const countdownElement = document.getElementById('countdown');
+
+            const countInterval = setInterval(() => {
+                countdownElement.textContent = count;
+                countdownElement.style.fontSize = '6rem';
+                countdownElement.style.animation = 'bounce 1s ease';
+
+                count--;
+
+                if (count < 0) {
+                    clearInterval(countInterval);
+                    nextStep(5);
+                    createHearts();
+                }
+            }, 1000);
+        }
+
+        function createHearts() {
+            const heartsContainer = document.querySelector('.floating-hearts');
+
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const celebrationElements = ['🎆', '🎇', '🧨', '🎉', '🎊', '💥', '🌟', '✨'];
+                    const element = document.createElement('div');
+                    element.className = 'heart';
+                    element.innerHTML = celebrationElements[Math.floor(Math.random() * celebrationElements.length)];
+                    element.style.left = Math.random() * 100 + '%';
+                    element.style.animationDelay = Math.random() * 2 + 's';
+                    element.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                    heartsContainer.appendChild(element);
+
+                    setTimeout(() => {
+                        element.remove();
+                    }, 8000);
+                }, i * 200);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#ff6b9d', '#ffd93d', '#6bcf7f', '#4d9de0', '#e15554', '#f1a208'];
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 3 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }, i * 50);
+            }
+        }
+
+        // Initialize progress bar
+        updateProgressBar();
+
+        // Create occasional floating celebration elements
+        setInterval(() => {
+            if (currentStep >= 3) {
+                const celebrationElements = ['🎆', '🎇', '🧨', '✨', '🎉', '🎊', '💥', '🌟'];
+                const element = document.createElement('div');
+                element.className = 'heart';
+                element.innerHTML = celebrationElements[Math.floor(Math.random() * celebrationElements.length)];
+                element.style.left = Math.random() * 100 + '%';
+                element.style.animationDuration = '8s';
+                document.querySelector('.floating-hearts').appendChild(element);
+
+                setTimeout(() => {
+                    element.remove();
+                }, 8000);
+            }
+        }, 3000);
+    </script>
+</body>
+
+</html>
